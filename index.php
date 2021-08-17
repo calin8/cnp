@@ -1,6 +1,6 @@
 <?php
 
-function create_form()
+function createForm(): string
 {
 
 	$form = '
@@ -14,7 +14,7 @@ function create_form()
 	return $form;
 }
 
-function validate_cnp($cnp)
+function isCnpValid(string $cnp): bool
 {
 
 	if (!$cnp) {
@@ -66,30 +66,11 @@ function validate_cnp($cnp)
 
 }
 
-function get_args()
-{
-	if (isset($_SERVER['argv'][1])) {
-		return $_SERVER['argv'][1];
-	} else {
-		return false;
-	}
-
-}
-
-function get_post()
-{
-	if (isset($_POST['cnp'])) {
-		return trim($_POST['cnp']);
-	} else {
-		return false;
-	}
-
-}
-
-if ($cnp = get_args()) {
-	echo (validate_cnp($cnp)) ? "cnp is valid \n" : "cnp is not valid \n";
-} elseif ($cnp = get_post()) {
-	echo (validate_cnp($cnp)) ? "cnp is valid \n" : "cnp is not valid \n";
+if (isset($_SERVER['argv'][1])) {
+	echo (isCnpValid($_SERVER['argv'][1])) ? "cnp is valid \n" : "cnp is not valid \n";
+} elseif (isset($_POST['cnp'])) {
+	echo (isCnpValid(trim($_POST['cnp']))) ? "cnp is valid \n" : "cnp is not valid \n";
 } else {
-	echo create_form();
+	echo createForm();
 }
+
